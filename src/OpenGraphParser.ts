@@ -266,26 +266,29 @@ async function extractMeta(
   try {
     const urls = getUrls(textContent);
 
-    const metadataPromise = urls.map(async (url) => {
-      if (url.indexOf('youtube.com') >= 0) {
-        const data = await fetchJSON(
-          `https://www.youtube.com/oembed?url=${url}&format=json`,
-          url
-        );
-        if (data) {
-          return data;
+    const metadataPromise = urls.map(
+      async (url): Promise<MetaData | undefined> => {
+        if (url.indexOf('youtube.com') >= 0) {
+          const data = await fetchJSON(
+            `https://www.youtube.com/oembed?url=${url}&format=json`,
+            url
+          );
+          if (data) {
+            return data;
+          }
+        } else {
+          const html = await fetchHtml(url);
+          if (html) {
+            const data = {
+              ...(html ? parseMeta(html, url, options) : {}),
+              url,
+            };
+            return data;
+          }
         }
-      } else {
-        const html = await fetchHtml(url);
-        if (html) {
-          const data = {
-            ...(html ? parseMeta(html, url, options) : {}),
-            url,
-          };
-          return data;
-        }
+        return undefined;
       }
-    });
+    );
 
     const metadata = (await Promise.all(metadataPromise)).filter(
       (data): data is MetaData => !!data

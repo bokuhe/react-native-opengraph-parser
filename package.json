@@ -1,7 +1,7 @@
 {
-  "name": "react-native-opengraph-parser",
+  "name": "@sleiv/react-native-opengraph-parser",
   "version": "0.1.0",
-  "description": "Opengraph parser",
+  "description": "Simplifies opengraph metadata extraction in React Native",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
   "types": "lib/typescript/src/index.d.ts",
@@ -36,8 +36,10 @@
   },
   "keywords": [
     "react-native",
-    "ios",
-    "android"
+    "opengraph",
+    "og",
+    "android",
+    "ios"
   ],
   "repository": {
     "type": "git",
@@ -50,13 +52,15 @@
   },
   "homepage": "https://github.com/bokuhe/react-native-opengraph-parser#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
     "@evilmartians/lefthook": "^1.5.0",
     "@react-native/eslint-config": "^0.72.2",
     "@release-it/conventional-changelog": "^5.0.0",
+    "@types/html-entities": "^1.3.4",
     "@types/jest": "^28.1.2",
     "@types/react": "~17.0.21",
     "@types/react-native": "0.70.0",
@@ -102,18 +106,23 @@
   "release-it": {
     "git": {
       "commitMessage": "chore: release ${version}",
-      "tagName": "v${version}"
+      "tagName": "v${version}",
+      "requireCleanWorkingDir": false,
+      "addUntrackedFiles": true
     },
     "npm": {
       "publish": true
     },
     "github": {
-      "release": true
+      "release": false
     },
     "plugins": {
       "@release-it/conventional-changelog": {
         "preset": "angular"
       }
+    },
+    "hooks": {
+      "before:init": "yarn prepack"
     }
   },
   "eslintConfig": {
@@ -159,5 +168,8 @@
         }
       ]
     ]
+  },
+  "dependencies": {
+    "html-entities": "^2.4.0"
   }
 }

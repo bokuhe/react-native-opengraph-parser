@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "react-native-opengraph-parser": ["./src/index"]
+      "@sleiv/react-native-opengraph-parser": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

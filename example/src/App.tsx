@@ -1,13 +1,20 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-opengraph-parser';
+import { OpenGraphParser } from '@sleiv/react-native-opengraph-parser';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result, setResult] = React.useState<string | undefined>();
 
   React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+    OpenGraphParser.extractMeta('https://sleiv.net/')
+      .then((metadata) => {
+        console.log('metadata', metadata);
+        setResult(JSON.stringify(metadata));
+      })
+      .catch((e) => {
+        console.error(e);
+      });
   }, []);
 
   return (

@@ -1,21 +1,33 @@
 # react-native-opengraph-parser
 
-Opengraph parser
+react-native-opengraph-parser is a package for React-Native applications that utilizes the Open Graph protocol to easily extract and parse metadata from web pages. This package is based on [react-native-opengraph-kit](https://github.com/Osedea/react-native-opengraph-kit) and has been updated to support the latest version of React Native and TypeScript.
 
 ## Installation
 
 ```sh
-npm install react-native-opengraph-parser
+npm install @sleiv/react-native-opengraph-parser
+```
+
+or
+
+```sh
+yarn add @sleiv/react-native-opengraph-parser
 ```
 
 ## Usage
 
 ```js
-import { multiply } from 'react-native-opengraph-parser';
+import { OpenGraphParser } from '@sleiv/react-native-opengraph-parser';
 
 // ...
 
-const result = await multiply(3, 7);
+OpenGraphParser.extractMeta('https://sleiv.net/')
+  .then((metadata) => {
+    console.log(metadata);
+  })
+  .catch((e) => {
+    console.error(e);
+  });
 ```
 
 ## Contributing
